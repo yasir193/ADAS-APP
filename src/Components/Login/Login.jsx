@@ -128,7 +128,7 @@ export default function Login() {
                 {Array.from({ length: 14 }, (_, index) => (
                   <input
                     key={index}
-                    type="text"
+                    type="tel"
                     maxLength="1"
                     className="nationalID-cell"
                     ref={(el) => (inputsRef.current[index] = el)} // Assign refs
