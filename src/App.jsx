@@ -12,15 +12,15 @@ import { jwtDecode } from 'jwt-decode';
 
 
 function App() {
-  const ProtectedRoute = ({children}) => {
+  // const ProtectedRoute = () => {
     
   
-    if (!localStorage.getItem("token")) {
-      return <Navigate to="/login" />;
-    }
+  //   if (!localStorage.getItem("token")) {
+  //     return <Navigate to="/login" />;
+  //   }
   
-    return children || null;
-  };
+  //   return children || null;
+  // };
   
   
 
