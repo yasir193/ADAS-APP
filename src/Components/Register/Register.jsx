@@ -12,6 +12,7 @@ export default function Register() {
 
   const navigate = useNavigate();
 
+  // Initial user data
   const initialUserData = {
     userName: "",
     phone: "",
@@ -20,9 +21,10 @@ export default function Register() {
     confirmPassword: "",
   };
 
+  // Register new user function
   async function registerNewUser(values) {
     setIsLoading(true);
-    setErrorMsg(null);
+    setErrorMsg(null); // Reset error message
 
     try {
       const { data } = await axios.post(
@@ -35,51 +37,42 @@ export default function Register() {
         setTimeout(() => {
           navigate('/login');
         }, 1500);
-      } else {
-        // Handle cases where the server responds with a success status code but the message is not "Creation success!"
-        setErrorMsg(data.message || "Registration failed. Please try again."); // Display a generic message or the server's specific message
       }
-    } catch (error) {
-      // More robust error handling
-      console.error("Registration error:", error); // Log the full error for debugging
-      if (error.response && error.response.data && error.response.data.message) {
-        setErrorMsg(error.response.data.message); // Prioritize server error message
-      } else if (error.message) {
-        setErrorMsg(error.message); // Fallback to client-side error message
-      } else {
-        setErrorMsg("An error occurred during registration. Please try again later."); // Generic error message
-      }
-    } finally {
-      setIsLoading(false);
+    } catch (e) {
+      setErrorMsg(e.response?.data?.message || "An error occurred. Please try again.");
     }
+
+    setIsLoading(false);
   }
 
+  // Form validation function
   function validateForm(values) {
     const errors = {};
 
-    if (!values.userName || values.userName.length < 4 || values.userName.length > 20) {
-      errors.userName = "Name must be between 4 and 20 characters";
+    if (values.userName.length < 4 || values.userName.length > 20) {
+      errors.userName = "Name must be at least 4 characters";
     }
 
-    if (!values.email || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-      errors.email = "Enter a valid email";
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      errors.email = "Enter a valid Email";
     }
 
-    if (!values.phone || !/^(02)?01[0125][0-9]{8}$/.test(values.phone)) {
-      errors.phone = "Enter a valid Egyptian phone number";
+    if (!values.phone.match(/^(02)?01[0125][0-9]{8}$/)) {
+      errors.phone = "Enter a valid phone number";
     }
 
-    if (!values.password || values.password.length < 8) {
+    if (values.password.length < 8) {
       errors.password = "Password must be at least 8 characters";
     }
 
-    if (values.password !== values.confirmPassword) {
+    if (values.confirmPassword !== values.password) {
       errors.confirmPassword = "Passwords don't match";
     }
 
     return errors;
   }
 
+  // Formik object for handling form state and validation
   const formikObj = useFormik({
     initialValues: initialUserData,
     onSubmit: registerNewUser,
@@ -87,37 +80,140 @@ export default function Register() {
   });
 
   return (
-    <div className="main">
-      {errorMsg && <div className="alert w-50 text-center position-fixed mt-5 top-0 z-3 m-auto alert-danger">{errorMsg}</div>}
-      {successMsg && (
-        <div className="alert w-50 position-fixed top-0 z-3 text-center m-auto alert-success">
-          {successMsg} {/* Display the actual success message from the server */}
-        </div>
-      )}
-      <div className="form-container">
-        <h1>Register Now!</h1>
-        <form onSubmit={formikObj.handleSubmit}>
-          {/* ... (rest of your form code) */}
-          <button type="submit" className="btn">
-            {isLoading ? (
-              <Vortex
-                visible={true}
-                height=""
-                width="30"
-                ariaLabel="vortex-loading"
-                wrapperStyle={{}}
-                wrapperClass="vortex-wrapper"
-                colors={['#ff009d', '#ff009d', '#FBCB1D', '#FBCB1D', '#029cca', '#029cca']}
+    <>
+      <div className="main">
+        {errorMsg ? (
+          <div className="alert w-50 text-center position-absolute mt-5 top-0 z-3 m-auto alert-danger">
+            {errorMsg}
+          </div>
+        ) : ""}
+
+        {successMsg ? (
+          <div className="alert w-50 position-absolute top-0 z-3 text-center m-auto alert-success">
+            Successfully Registered
+          </div>
+        ) : ""}
+
+        <div className="form-container">
+          <h1>Register Now!</h1>
+          <form onSubmit={formikObj.handleSubmit}>
+            <div className="mb-3">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Name"
+                required
+                id="userName"
+                value={formikObj.values.userName}
+                onChange={formikObj.handleChange}
+                onBlur={formikObj.handleBlur}
+                aria-describedby="userNameError"
               />
-            ) : (
-              "Sign up"
-            )}
-          </button>
-        </form>
-        <p className="mt-3">
-          Have an account? <Link to="/login">Login</Link>
-        </p>
+              {formikObj.errors.userName && formikObj.touched.userName && (
+                <div id="userNameError" className="w-100 mt-3 text-danger">
+                  {formikObj.errors.userName}
+                </div>
+              )}
+            </div>
+
+            <div className="mb-3">
+              <input
+                type="tel"
+                className="form-control"
+                placeholder="Phone"
+                required
+                id="phone"
+                value={formikObj.values.phone}
+                onChange={formikObj.handleChange}
+                onBlur={formikObj.handleBlur}
+                aria-describedby="phoneError"
+              />
+              {formikObj.errors.phone && formikObj.touched.phone && (
+                <div id="phoneError" className="w-100 mt-3 text-danger">
+                  {formikObj.errors.phone}
+                </div>
+              )}
+            </div>
+
+            <div className="mb-3">
+              <input
+                type="email"
+                className="form-control"
+                placeholder="Email"
+                required
+                id="email"
+                value={formikObj.values.email}
+                onChange={formikObj.handleChange}
+                onBlur={formikObj.handleBlur}
+                aria-describedby="emailError"
+              />
+              {formikObj.errors.email && formikObj.touched.email && (
+                <div id="emailError" className="w-100 mt-3 text-danger">
+                  {formikObj.errors.email}
+                </div>
+              )}
+            </div>
+
+            <div className="mb-3">
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Password"
+                required
+                id="password"
+                value={formikObj.values.password}
+                onChange={formikObj.handleChange}
+                onBlur={formikObj.handleBlur}
+                aria-describedby="passwordError"
+              />
+              {formikObj.errors.password && formikObj.touched.password && (
+                <div id="passwordError" className="w-100 mt-3 text-danger">
+                  {formikObj.errors.password}
+                </div>
+              )}
+            </div>
+
+            <div className="mb-3">
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Confirm Password"
+                required
+                id="confirmPassword"
+                value={formikObj.values.confirmPassword}
+                onChange={formikObj.handleChange}
+                onBlur={formikObj.handleBlur}
+                aria-describedby="confirmPasswordError"
+              />
+              {formikObj.errors.confirmPassword && formikObj.touched.confirmPassword && (
+                <div id="confirmPasswordError" className="w-100 mt-3 text-danger">
+                  {formikObj.errors.confirmPassword}
+                </div>
+              )}
+            </div>
+
+            <button type="submit" className="btn">
+              {isLoading ? (
+                <Vortex
+                  visible={true}
+                  height="30"
+                  width="30"
+                  ariaLabel="vortex-loading"
+                  wrapperStyle={{}}
+                  wrapperClass="vortex-wrapper"
+                  colors={['#ff009d', '#ff009d', '#FBCB1D', '#FBCB1D', '#029cca', '#029cca']}
+                />
+              ) : (
+                'Sign up'
+              )}
+            </button>
+          </form>
+
+          <p className="mt-3">
+            Have an account? <Link to="/login">Login</Link>
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
