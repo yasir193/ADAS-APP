@@ -26,7 +26,7 @@ export default function Register() {
 
     try {
       const { data } = await axios.post(
-        "https://be-grad.vercel.app/auth/signup",
+        "https://graduation-project-backend-rhwo.vercel.app/auth/signup",
         values
       );
 
