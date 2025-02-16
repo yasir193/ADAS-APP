@@ -1,9 +1,9 @@
-import React, { useState,  useRef  }  from "react";
+import React, { useState  }  from "react";
 import "./Register.css";
 import axios from "axios";
 import { useFormik } from "formik";
 import { Vortex } from "react-loader-spinner";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export default function Register() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
@@ -49,8 +49,8 @@ export default function Register() {
   }
   function validateForm(values) {
     const errors = {};
-    if (values.userName.length < 4 || values.name.length > 20) {
-      errors.name = "Name must be at least 4 characters";
+    if (values.userName.length < 4 || values.userName.length > 20) {
+      errors.userName = "Name must be at least 4 characters";
     }
 
     if (!values.email.includes("@") || !values.email.includes(".")) {
