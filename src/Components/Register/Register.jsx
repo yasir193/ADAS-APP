@@ -31,7 +31,8 @@ export default function Register() {
         "https://graduation-project-backend-rhwo.vercel.app/auth/signup",
         values
       );
-
+      console.log(data);
+      
       if (data.message === "Creation success!") {
         setSuccessMsg(data.message);
         setTimeout(() => {
@@ -40,6 +41,8 @@ export default function Register() {
       }
     } catch (e) {
       setErrorMsg(e.response?.data?.message || "An error occurred. Please try again.");
+      console.log(e);
+      
     }
 
     setIsLoading(false);
