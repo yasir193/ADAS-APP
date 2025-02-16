@@ -22,6 +22,7 @@ export default function Login() {
     "30209242102615",
     "30205301800326",
     "30201150102804",
+    "30012012110092",
   ];
 
   const handleInputChange = (e, index) => {

@@ -16,11 +16,11 @@ export default function Register() {
   
   // Initial user data
   const initialUserData = {
-    name: "",
+    userName: "",
     phone: "",
     email: "",
     password: "",
-    rePassword: "",
+    confirmPassword: "",
   };
   // Register new user function
   async function registerNewUser(values) {
@@ -30,11 +30,11 @@ export default function Register() {
     try {
       
       const { data } = await axios.post(
-        "https://ecommerce.routemisr.com/api/v1/auth/signup",
+        "https://be-grad.vercel.app/auth/signup",
         values
       );
 
-      if (data.message === "success") {
+      if (data.message === "Creation success!") {
         setSuccessMsg(data.message);
         setTimeout(() => {
           navigate('/login')
@@ -49,7 +49,7 @@ export default function Register() {
   }
   function validateForm(values) {
     const errors = {};
-    if (values.name.length < 4 || values.name.length > 20) {
+    if (values.userName.length < 4 || values.name.length > 20) {
       errors.name = "Name must be at least 4 characters";
     }
 
@@ -65,8 +65,8 @@ export default function Register() {
       errors.password = "Password must be at least 8 characters";
     }
 
-    if (values.rePassword !== values.password) {
-      errors.rePassword =  "Passwords don't match";
+    if (values.confirmPassword !== values.password) {
+      errors.confirmPassword =  "Passwords don't match";
     }
 
     return errors;
@@ -99,14 +99,14 @@ export default function Register() {
                 className="form-control"
                 placeholder="Name"
                 required
-                id="name"
-                value={formikObj.values.name}
+                id="userName"
+                value={formikObj.values.userName}
                 onChange={formikObj.handleChange}
                 onBlur={formikObj.handleBlur}
               />
               {/* Display the error dynamically */}
-              {formikObj.errors.name && formikObj.touched.name && (
-                <div className="w-100 mt-3 text-danger">{formikObj.errors.name}</div>
+              {formikObj.errors.userName && formikObj.touched.userName && (
+                <div className="w-100 mt-3 text-danger">{formikObj.errors.userName}</div>
               )}
             </div>
           
@@ -162,16 +162,16 @@ export default function Register() {
               <input
                 type="password"
                 className="form-control"
-                placeholder="Re Password"
+                placeholder="Confirm Password"
                 required
-                id="rePassword"
-                value={formikObj.values.rePassword}
+                id="confirmPassword"
+                value={formikObj.values.confirmPassword}
                 onChange={formikObj.handleChange}
                 onBlur={formikObj.handleBlur}
               />
               {/* Display the error dynamically */}
-              {formikObj.errors.rePassword && formikObj.touched.rePassword && (
-                <div className="w-100 mt-3 text-danger">{formikObj.errors.rePassword}</div>
+              {formikObj.errors.confirmPassword && formikObj.touched.confirmPassword && (
+                <div className="w-100 mt-3 text-danger">{formikObj.errors.confirmPassword}</div>
               )}
             </div>
             <button type="submit" className="btn">
