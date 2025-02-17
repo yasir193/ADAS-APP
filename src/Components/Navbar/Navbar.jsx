@@ -19,7 +19,7 @@ export default function Navbar({ clearUser }) {
   }, [location]); // Re-run effect on route change
 
   // Hide navbar on 'login' and 'register' pages
-  if (location.pathname === '/login' || location.pathname === '/register') {
+  if (location.pathname === '/login' || location.pathname === '/register'|| location.pathname === '/#/login' ||location.pathname === '/#/register') {
     return null;
   }
 
@@ -48,6 +48,11 @@ export default function Navbar({ clearUser }) {
             <li className="nav-item">
               <Link className="nav-link text-whitee active edit me-2" aria-current="page" to="/home">
                 Home
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link text-whitee active edit me-2" aria-current="page" to="/control">
+                Control
               </Link>
             </li>
           </ul>

@@ -8,6 +8,8 @@ import NotFound from "./Components/NotFound/NotFound";
 import Dashboard from "./Components/Home/Dashboard";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import Control from './Components/Control/Control';
+
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -67,6 +69,14 @@ function App() {
           element: (
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "control",
+          element: (
+            <ProtectedRoute>
+              <Control />
             </ProtectedRoute>
           ),
         },
