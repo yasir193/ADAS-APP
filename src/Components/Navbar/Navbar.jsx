@@ -19,7 +19,7 @@ export default function Navbar({ clearUser }) {
   }, [location]); // Re-run effect on route change
 
   // Hide navbar on 'login' and 'register' pages
-  if (location.pathname === '/login' || location.pathname === '/register'|| location.pathname === '/#/login' ||location.pathname === '/#/register') {
+  if (location.pathname === '/login' || location.pathname === '/register'|| location.pathname === '/#/login' ||location.pathname === '/#/register'||location.pathname === '/') {
     return null;
   }
 
