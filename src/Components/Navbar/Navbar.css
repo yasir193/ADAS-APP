@@ -1,0 +1,14 @@
+.cursor-pointer{
+  cursor: pointer;
+}
+.text-whitee{
+  color: white !important;
+}
+.colorr{
+  background-color: #008a94;
+}
+@media (max-width:750px) {
+  li .edit{
+    margin-right: 0px !important;
+  }
+}

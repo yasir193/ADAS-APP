@@ -5,7 +5,8 @@ import { useFormik } from "formik";
 import { Vortex } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Login({ getUserData }) {  // Accept getUserData as prop
+
   const [errorMsg, setErrorMsg] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -57,33 +58,35 @@ export default function Login() {
   async function loginToProject(values) {
     setIsLoading(true);
     setErrorMsg(null);
-
-    const fullNationalID = nationalID.join(""); // Combine the 14 digits
+  
+    const fullNationalID = nationalID.join("");
     if (fullNationalID.length !== 14 || !arrayOfUsers.includes(fullNationalID)) {
       setErrorMsg("Invalid National ID");
       setIsLoading(false);
       return;
     }
-
+  
     try {
       const { data } = await axios.post(
-        "https://ecommerce.routemisr.com/api/v1/auth/signin",
+        "https://graduation-project-backend-rhwo.vercel.app/auth/signin",
         values
       );
-
-      if (data.message === "success") {
+  
+      if (data.message === "Login success") {
         setSuccessMsg(data.message);
-        localStorage.setItem('token' , data.token);
+        localStorage.setItem('token' , data.accessToken);
         setTimeout(() => {
           navigate("/home");
         }, 1500);
       }
     } catch (e) {
-      setErrorMsg(e.response.data.message);
+      setErrorMsg(e.response?.data?.message || "Login failed");
     }
-
+  
     setIsLoading(false);
   }
+  
+  
 
   function validateForm(values) {
     const errors = {};

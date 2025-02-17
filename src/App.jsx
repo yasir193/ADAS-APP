@@ -1,92 +1,93 @@
-import { createBrowserRouter,  createHashRouter,  Navigate,  RouterProvider } from 'react-router-dom'
-import './App.css'
-import Layout from './Components/Layout/Layout';
-import Register from './Components/Register/Register';
-import Login from './Components/Login/Login';
-import Profile from './Components/Profile/Profile';
-import NotFound from './Components/NotFound/NotFound';
-import Dashboard from './Components/Home/Dashboard';
-import { useEffect, useState } from 'react';
-import { jwtDecode } from 'jwt-decode';
-
-
+import { createHashRouter, Navigate, RouterProvider } from "react-router-dom";
+import "./App.css";
+import Layout from "./Components/Layout/Layout";
+import Register from "./Components/Register/Register";
+import Login from "./Components/Login/Login";
+import Profile from "./Components/Profile/Profile";
+import NotFound from "./Components/NotFound/NotFound";
+import Dashboard from "./Components/Home/Dashboard";
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 function App() {
-  // const ProtectedRoute = () => {
-    
-  
-  //   if (!localStorage.getItem("token")) {
-  //     return <Navigate to="/login" />;
-  //   }
-  
-  //   return children || null;
-  // };
-  
-  
+  const [currentUser, setCurrentUser] = useState(null);
 
-
-  const [currentUser , setCurrentUser ] = useState(null);
-
-  function getUserData(){
-
-
-    const userData =  jwtDecode(localStorage.getItem('token'));
-    setCurrentUser(userData);
-  };
-  function clearUser(){
-
-    localStorage.removeItem('token');
-    setCurrentUser(null);
+  // Function to decode the token and set the current user
+  function getUserData() {
+    try {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const userData = jwtDecode(token);
+        setCurrentUser(userData); // Ensure state updates
+      } else {
+        setCurrentUser(null); // Clear user if no token
+      }
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      clearUser(); // Clear invalid token
+    }
   }
   
-  useEffect(function(){
-    if(localStorage.getItem('token') !== null && currentUser == null  ){
+  
+
+  // Function to clear the current user and token
+  function clearUser() {
+    localStorage.removeItem("token");
+    setCurrentUser(null);
+  }
+
+  // Effect to fetch user data when the component mounts
+  useEffect(function () {
+    if (localStorage.getItem("token") !== null && currentUser == null) {
       getUserData();
     }
-  })
-  
+  }, [currentUser]); // Add currentUser as a dependency
+
+  // Protected route component
+  const ProtectedRoute = ({ children }) => {
+    if (!localStorage.getItem("token")) {
+      return <Navigate to="/login" />;
+    }
+    return children;
+  };
+
+  // Router configuration
+  const router = createHashRouter([
+    {
+      path: "/",
+      element: <Layout currentUser={currentUser} clearUser={clearUser} />,
+      children: [
+        { index: true, element: <Register /> },
+        { path: "register", element: <Register /> },
+        { path: "login", element: <Login getUserData={getUserData} /> },
 
 
+        {
+          path: "home",
+          element: (
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "profile",
+          element: (
+            <ProtectedRoute>
+              <Profile currentUser={currentUser} />
+            </ProtectedRoute>
+          ),
+        },
+        { path: "*", element: <NotFound /> },
+      ],
+    },
+  ]);
 
-
-
-
-
-
-
-
-
-
-
-  const router =  createHashRouter([
-    {path: '/' , element: <Layout currentUser={currentUser } clearUser={clearUser} /> , children: [
-      {index: true , element: <Register/> },
-      {path: 'register' , element: <Register/> },
-      {path: 'login', element: <Login getUserData={ getUserData }/> },
-      {path: 'home', element: <Dashboard/> },
-      {path: 'profile', element: <Profile currentUser={currentUser}  />},
-      {path: '*', element: <NotFound/> }
-    ]}
-  ])
-
-
-
-
-
-
-
-
-
-
-
-
-
-  return <>
-  
-  <RouterProvider router= {router} />
-  
-  
-  </>
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
-export default App
+export default App;
