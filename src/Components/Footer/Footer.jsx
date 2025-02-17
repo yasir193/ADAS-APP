@@ -14,7 +14,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container">
         <div className="footer-content">
-          <p>&copy; {new Date().getFullYear()} Your Company Name. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} ADAS project. All rights reserved.</p>
           <div className="footer-links">
             <a href="/privacy-policy">Privacy Policy</a>
             <a href="mailto:contact@yourdomain.com">Contact Us</a>

@@ -53,3 +53,11 @@ body, html {
 .footer .footer-links a:hover {
   text-decoration: underline;
 }
+@media (max-width: 768px) {
+  .footer {
+    position: fixed;
+    width: 100%;
+  }
+
+  
+}
