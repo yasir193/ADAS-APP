@@ -23,6 +23,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 100px;
 }
 .status-box, .traffic-box {
   width: 40%; /* Both boxes take 30% of the row's width */
