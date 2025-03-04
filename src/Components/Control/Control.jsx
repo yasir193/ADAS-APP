@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Control.css';
 
-export default function Controll() {
+export default function Control() {
   const [servoAngle, setServoAngle] = useState(90); // Default servo angle at 90°
 
   // Handle Servo Motor Control
