@@ -156,7 +156,7 @@ export default function Login({ getUserData }) {  // Accept getUserData as prop
                 onBlur={formikObj.handleBlur}
               />
               {formikObj.errors.email && formikObj.touched.email && (
-                <div className="w-100 mt-3 text-danger">
+                <div className="w-100 mt-3 neon-red">
                   {formikObj.errors.email}
                 </div>
               )}
@@ -173,7 +173,7 @@ export default function Login({ getUserData }) {  // Accept getUserData as prop
                 onBlur={formikObj.handleBlur}
               />
               {formikObj.errors.password && formikObj.touched.password && (
-                <div className="w-100 mt-3 text-danger">
+                <div className="w-100 mt-3 neon-red">
                   {formikObj.errors.password}
                 </div>
               )}

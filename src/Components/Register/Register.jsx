@@ -113,7 +113,7 @@ export default function Register() {
                 aria-describedby="userNameError"
               />
               {formikObj.errors.userName && formikObj.touched.userName && (
-                <div id="userNameError" className="w-100 mt-3 text-danger">
+                <div id="userNameError" className="w-100 mt-3 neon-red">
                   {formikObj.errors.userName}
                 </div>
               )}
@@ -132,7 +132,7 @@ export default function Register() {
                 aria-describedby="phoneError"
               />
               {formikObj.errors.phone && formikObj.touched.phone && (
-                <div id="phoneError" className="w-100 mt-3 text-danger">
+                <div id="phoneError" className="w-100 mt-3 neon-red">
                   {formikObj.errors.phone}
                 </div>
               )}
@@ -151,7 +151,7 @@ export default function Register() {
                 aria-describedby="emailError"
               />
               {formikObj.errors.email && formikObj.touched.email && (
-                <div id="emailError" className="w-100 mt-3 text-danger">
+                <div id="emailError" className="w-100 mt-3 neon-red">
                   {formikObj.errors.email}
                 </div>
               )}
@@ -170,7 +170,7 @@ export default function Register() {
                 aria-describedby="passwordError"
               />
               {formikObj.errors.password && formikObj.touched.password && (
-                <div id="passwordError" className="w-100 mt-3 text-danger">
+                <div id="passwordError" className="w-100 mt-3 neon-red">
                   {formikObj.errors.password}
                 </div>
               )}
@@ -189,7 +189,7 @@ export default function Register() {
                 aria-describedby="confirmPasswordError"
               />
               {formikObj.errors.confirmPassword && formikObj.touched.confirmPassword && (
-                <div id="confirmPasswordError" className="w-100 mt-3 text-danger">
+                <div id="confirmPasswordError" className="w-100 mt-3 neon-red">
                   {formikObj.errors.confirmPassword}
                 </div>
               )}

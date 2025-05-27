@@ -1,6 +1,6 @@
 .main {
  
-  height: 100vh;
+  height: 100dvh;
   margin: 0;
   display: flex;
   justify-content: center;
@@ -31,7 +31,15 @@
   font-size: 14px;
   color: white;
 }
-
+.neon-red {
+  color: #ff0707;
+  text-shadow: 
+    0 0 5px #ff0707,
+    0 0 10px #ff0707,
+    0 0 15px #ff073a,
+    0 0 20px #ff073a;
+  font-weight: bold;
+}
 .form-containerr a {
   text-decoration: none;
   font-size: 14px;
