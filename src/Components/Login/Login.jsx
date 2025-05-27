@@ -122,7 +122,7 @@ export default function Login({ getUserData }) {  // Accept getUserData as prop
           </div>
         )}
         <div className="form-containerr">
-          <h1>Login Now!</h1>
+          <h1 className="text-white">Login Now!</h1>
           <form onSubmit={formikObj.handleSubmit}>
           
             <div className="mb-3">

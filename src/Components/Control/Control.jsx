@@ -26,8 +26,8 @@ export default function Control() {
       <div className="motor-controls">
         <button onClick={() => moveMotor('forward')}>⬆</button>
         <div className="side-buttons">
-          <button onClick={() => moveMotor('left')}>⬅</button>
-          <button onClick={() => moveMotor('right')}>➡</button>
+          <button onClick={() => moveMotor('left')}></button>
+          <button onClick={() => moveMotor('right')}></button>
         </div>
         <button onClick={() => moveMotor('backward')}>⬇</button>
       </div>

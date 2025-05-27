@@ -98,7 +98,7 @@ export default function Register() {
         ) : ""}
 
         <div className="form-container">
-          <h1>Register Now!</h1>
+          <h1 className="text-white">Register Now!</h1>
           <form onSubmit={formikObj.handleSubmit}>
             <div className="mb-3">
               <input

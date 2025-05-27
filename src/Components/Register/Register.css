@@ -1,7 +1,5 @@
 .main {
-  background-image: url(../../imgs/adas.webp); /* Replace with your background image */
-  background-size: cover;
-  background-position: center;
+  
   height: 100vh;
   margin: 0;
   display: flex;
@@ -27,7 +25,7 @@
 
 .form-container p {
   font-size: 14px;
-  color: #6c757d;
+  color: white;
 }
 
 .form-container .form-check-label {
@@ -37,16 +35,17 @@
 .form-container a {
   text-decoration: none;
   font-size: 14px;
+  color: #6c63ff; 
 }
 
 .form-container .btn {
   width: 50%;
-  background-color: #6c63ff;
+  background-color: rgb(0, 46, 106);
   color: white;
 }
 
 .form-container .btn:hover {
-  background-color: #5a54e1;
+  background-color:rgb(0, 23, 52);
 }
 .nationalID-input {
   display: flex;
