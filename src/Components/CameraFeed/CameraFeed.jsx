@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import './CameraFeed.css';
+import React, { useState } from "react";
+import "./CameraFeed.css";
 
 const CameraFeed = () => {
-  const ipCameraUrl = 'http://192.168.1.3:4747/video';
+  const ipCameraUrl = 'https://4730-41-68-167-188.ngrok-free.app/video';
   const [isCameraOn, setIsCameraOn] = useState(false);
 
   return (
@@ -23,9 +23,10 @@ const CameraFeed = () => {
 
       {isCameraOn ? (
         <div className="camera-container">
-          <iframe
+          {/* Use iframe or img based on what works */}
+          <img
             src={ipCameraUrl}
-            title="IP Camera Feed"
+            alt="Camera Feed"
             className="camera-feed"
           />
         </div>
@@ -38,5 +39,6 @@ const CameraFeed = () => {
     </div>
   );
 };
+
 
 export default CameraFeed;
