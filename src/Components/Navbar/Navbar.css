@@ -1,14 +1,142 @@
-.cursor-pointer{
+/* Navbar.css */
+
+/* Desktop/Large Screen Styles (Sidebar) */
+.desktop-sidebar {
+  display: none; /* Hide by default, shown on medium+ screens */
+  width: 80px;
+  height: 100dvh;
+  background-color: #008a94;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sidebar-icons-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-evenly;
+}
+
+.sidebar-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 25dvh;
+  color: white;
+  text-decoration: none;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.sidebar-icon:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-icon.active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-icon.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: white;
+}
+
+/* Mobile/Small Screen Styles (Bottom Bar) */
+.mobile-navbar {
+  display: flex; /* Show by default for mobile */
+  width: 100%;
+  background-color: #008a94;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 5px 0;
+}
+
+.mobile-icons-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.mobile-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  padding: 8px 5px;
+  flex: 1;
+  min-width: 0;
+  transition: all 0.2s;
+}
+
+.mobile-icon:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-icon.active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Common Styles */
+.icon {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+.icon-label {
+  font-size: 0.75rem;
+  text-align: center;
+  display: block;
+}
+
+.logout {
   cursor: pointer;
 }
-.text-whitee{
-  color: white !important;
+
+/* Auth buttons styling */
+.auth-buttons {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-.colorr{
-  background-color: #008a94;
+
+/* Responsive Breakpoints */
+@media (min-width: 768px) {
+  /* Show desktop sidebar on medium+ screens */
+  .desktop-sidebar {
+    display: flex;
+  }
+  
+  /* Hide mobile navbar on medium+ screens */
+  .mobile-navbar {
+    display: none;
+  }
 }
-@media (max-width:750px) {
-  li .edit{
-    margin-right: 0px !important;
+
+@media (max-width: 767px) {
+  /* Adjust icon height for mobile */
+  .sidebar-icon {
+    height: 20dvh;
+  }
+  
+  /* Show labels only when there's space */
+  @media (max-height: 600px) {
+    .icon-label {
+      display: none;
+    }
   }
 }

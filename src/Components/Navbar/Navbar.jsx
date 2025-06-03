@@ -1,92 +1,133 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import './Navbar.css';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import "./Navbar.css";
+import {
+  FaHome,
+  FaCar,
+  FaUser,
+  FaSignOutAlt,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
 
 export default function Navbar({ clearUser }) {
-  const [currentUser, setCurrentUser] = useState(null); // State to track current user
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation(); // Get the current route
+  const location = useLocation();
 
-  // Check if user is logged in based on token in localStorage
+  // Check if user is logged in
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      // Assume the token is valid, you can also validate it here if needed
-      setCurrentUser({ token }); // You can store more user data if needed
-    } else {
-      setCurrentUser(null);
-    }
-  }, [location]); // Re-run effect on route change
+    const token = localStorage.getItem("token");
+    setCurrentUser(token ? { token } : null);
+  }, [location]);
 
-  // Hide navbar on 'login' and 'register' pages
-  if (location.pathname === '/login' || location.pathname === '/register'|| location.pathname === '/#/login' ||location.pathname === '/#/register'||location.pathname === '/') {
+  // Hide navbar on auth pages
+  if (
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    location.pathname === "/#/login" ||
+    location.pathname === "/#/register" ||
+    location.pathname === "/"
+  ) {
     return null;
   }
 
   function handleLogout() {
     clearUser();
-    localStorage.removeItem('token'); // Remove token from localStorage
-    navigate('/login');
+    localStorage.removeItem("token");
+    navigate("/login");
   }
 
   return (
-    <nav className="navbar fw-bold colorr text-whitee navbar-expand-lg">
-      <div className="container-fluid text-whitee">
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
-            <li className="nav-item">
-              <Link className="nav-link text-whitee active edit me-2" aria-current="page" to="/home">
-                Home
+    <>
+      {/* Desktop/Large Screen Navbar (Sidebar) */}
+      <nav className="desktop-sidebar">
+        <div className="sidebar-icons-container">
+          <Link
+            to="/home"
+            className={`sidebar-icon ${
+              location.pathname === "/home" ? "active" : ""
+            }`}
+          >
+            <FaHome className="icon" />
+            <span className="icon-label">Home</span>
+          </Link>
+
+          <Link
+            to="/control"
+            className={`sidebar-icon ${
+              location.pathname === "/control" ? "active" : ""
+            }`}
+          >
+            <FaCar className="icon" />
+            <span className="icon-label">Control</span>
+          </Link>
+
+          {currentUser && (
+            <>
+              <Link
+                to="/profile"
+                className={`sidebar-icon ${
+                  location.pathname === "/profile" ? "active" : ""
+                }`}
+              >
+                <FaUser className="icon" />
+                <span className="icon-label">Profile</span>
               </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-whitee active edit me-2" aria-current="page" to="/control">
-                Control
-              </Link>
-            </li>
-          </ul>
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-            {currentUser ? (
-              <>
-                <li className="nav-item">
-                  <Link className="nav-link text-whitee active edit me-2" aria-current="page" to="/profile">
-                    Profile
-                  </Link>
-                </li>
-                <li>
-                  <span onClick={handleLogout} className="cursor-pointer text-whitee edit nav-link active me-2" aria-current="page">
-                    Logout
-                  </span>
-                </li>
-              </>
-            ) : (
-              <>
-                <li className="nav-item">
-                  <Link className="nav-link active text-whitee edit me-2" aria-current="page" to="/login">
-                    Login
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link text-whitee" to="/register">
-                    Register
-                  </Link>
-                </li>
-              </>
-            )}
-          </ul>
+
+              <div onClick={handleLogout} className="sidebar-icon logout">
+                <FaSignOutAlt className="icon" />
+                <span className="icon-label">Logout</span>
+              </div>
+            </>
+          )}
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Mobile/Small Screen Navbar (Bottom Bar) */}
+      <nav className="mobile-navbar">
+        <div className="mobile-icons-container">
+          <Link
+            to="/home"
+            className={`mobile-icon ${
+              location.pathname === "/home" ? "active" : ""
+            }`}
+          >
+            <FaHome className="icon" />
+            <span className="icon-label">Home</span>
+          </Link>
+
+          <Link
+            to="/control"
+            className={`mobile-icon ${
+              location.pathname === "/control" ? "active" : ""
+            }`}
+          >
+            <FaCar className="icon" />
+            <span className="icon-label">Control</span>
+          </Link>
+
+          {currentUser && (
+            <>
+              <Link
+                to="/profile"
+                className={`mobile-icon ${
+                  location.pathname === "/profile" ? "active" : ""
+                }`}
+              >
+                <FaUser className="icon" />
+                <span className="icon-label">Profile</span>
+              </Link>
+
+              <div onClick={handleLogout} className="mobile-icon logout">
+                <FaSignOutAlt className="icon" />
+                <span className="icon-label">Logout</span>
+              </div>
+            </>
+          )}
+        </div>
+      </nav>
+    </>
   );
 }

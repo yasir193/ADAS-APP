@@ -1,4 +1,11 @@
-body{
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+body {
   background-image: linear-gradient(to bottom right, rgb(8, 128, 122), rgb(9, 58, 122));
-
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: "Overpass", sans-serif;
+  background-attachment: fixed;
 }
