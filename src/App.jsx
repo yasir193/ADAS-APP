@@ -1,4 +1,4 @@
-import { createHashRouter, Navigate, RouterProvider } from "react-router-dom";
+import { createHashRouter, Navigate, RouterProvider, useNavigate } from "react-router-dom";
 import "./App.css";
 import Layout from "./Components/Layout/Layout";
 import Register from "./Components/Register/Register";
@@ -10,50 +10,62 @@ import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import Control from './Components/Control/Control';
 
-
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
-  // Function to decode the token and set the current user
   function getUserData() {
     try {
       const token = localStorage.getItem("token");
       if (token) {
-        const userData = jwtDecode(token);
-        setCurrentUser(userData); // Ensure state updates
+        const decoded = jwtDecode(token);
+        const currentTime = Math.floor(Date.now() / 1000); // In seconds
+
+        if (decoded.exp < currentTime) {
+          // Token has expired
+          clearUser();
+          return;
+        }
+
+        setCurrentUser(decoded);
       } else {
-        setCurrentUser(null); // Clear user if no token
+        setCurrentUser(null);
       }
     } catch (error) {
       console.error("Error decoding token:", error);
-      clearUser(); // Clear invalid token
+      clearUser();
     }
   }
-  
-  
 
-  // Function to clear the current user and token
   function clearUser() {
     localStorage.removeItem("token");
     setCurrentUser(null);
   }
 
-  // Effect to fetch user data when the component mounts
-  useEffect(function () {
-    if (localStorage.getItem("token") !== null && currentUser == null) {
-      getUserData();
-    }
-  }, [currentUser]); // Add currentUser as a dependency
+  useEffect(() => {
+    getUserData();
+  }, []); // Only run on mount
 
-  // Protected route component
+  // Protected route component with token expiry check
   const ProtectedRoute = ({ children }) => {
-    if (!localStorage.getItem("token")) {
+    const token = localStorage.getItem("token");
+
+    if (!token) return <Navigate to="/login" />;
+
+    try {
+      const decoded = jwtDecode(token);
+      const currentTime = Math.floor(Date.now() / 1000);
+      if (decoded.exp < currentTime) {
+        clearUser();
+        return <Navigate to="/login" />;
+      }
+    } catch (err) {
+      clearUser();
       return <Navigate to="/login" />;
     }
+
     return children;
   };
 
-  // Router configuration
   const router = createHashRouter([
     {
       path: "/",
@@ -62,8 +74,6 @@ function App() {
         { index: true, element: <Register /> },
         { path: "register", element: <Register /> },
         { path: "login", element: <Login getUserData={getUserData} /> },
-
-
         {
           path: "home",
           element: (
@@ -93,11 +103,7 @@ function App() {
     },
   ]);
 
-  return (
-    <>
-      <RouterProvider router={router} />
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
