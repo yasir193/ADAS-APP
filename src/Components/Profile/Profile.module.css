@@ -3,11 +3,7 @@
   display: flex;
   justify-content: center; /* horizontal center */
   align-items: center; /* vertical center */
-  background: linear-gradient(
-    to bottom right,
-    #007a85,
-    #033d87
-  ); /* same gradient as your background */
+  background-image: linear-gradient(to bottom right, #009990, #074799);
 }
 
 .profileContainer {
