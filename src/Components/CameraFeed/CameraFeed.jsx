@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./CameraFeed.css";
 
 const CameraFeed = () => {
-  const ipCameraUrl = 'https://4730-41-68-167-188.ngrok-free.app/video';
+  const ipCameraUrl = 'https://192.168.1.3:4343/video';
   const [isCameraOn, setIsCameraOn] = useState(false);
 
   return (
