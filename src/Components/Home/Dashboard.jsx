@@ -9,32 +9,57 @@ export default function Dashboard() {
   const [isMobile, setIsMobile] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
   const audioRef = useRef(null);
+  const [gpsCoords, setGpsCoords] = useState({
+    latitude: 30.0023807,
+    longitude: 31.1394304,
+  }); // default fallback
 
-  
   useEffect(() => {
-    audioRef.current = new Audio('/sounds/alarm-police-fire-ambulance-etc-sound-effect-26-11504.mp3');
+    const fetchGPS = () => {
+      axios
+        .get("https://graduation-project-backend-rhwo.vercel.app/gps/get-gps")
+        .then((res) => {
+          const { latitude, longitude } = res.data;
+          if (latitude && longitude) {
+            setGpsCoords({ latitude, longitude });
+          }
+        })
+        .catch((err) => {
+          console.error("Error fetching GPS coordinates:", err);
+        });
+    };
+
+    fetchGPS(); // initial fetch
+    const interval = setInterval(fetchGPS, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    audioRef.current = new Audio(
+      "/sounds/alarm-police-fire-ambulance-etc-sound-effect-26-11504.mp3"
+    );
     audioRef.current.loop = true;
 
     // Handle user interaction to enable audio
     const handleInteraction = () => {
       setUserInteracted(true);
       // Play/pause quickly to unlock audio (won't actually play)
-      audioRef.current.play().catch(e => console.log("Audio pre-unlock:", e));
+      audioRef.current.play().catch((e) => console.log("Audio pre-unlock:", e));
       audioRef.current.pause();
-      document.removeEventListener('click', handleInteraction);
-      document.removeEventListener('touchstart', handleInteraction);
+      document.removeEventListener("click", handleInteraction);
+      document.removeEventListener("touchstart", handleInteraction);
     };
 
-    document.addEventListener('click', handleInteraction);
-    document.addEventListener('touchstart', handleInteraction);
+    document.addEventListener("click", handleInteraction);
+    document.addEventListener("touchstart", handleInteraction);
 
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
       }
-      document.removeEventListener('click', handleInteraction);
-      document.removeEventListener('touchstart', handleInteraction);
+      document.removeEventListener("click", handleInteraction);
+      document.removeEventListener("touchstart", handleInteraction);
     };
   }, []);
 
@@ -48,12 +73,18 @@ export default function Dashboard() {
 
   // Fetch data
   const fetchData = () => {
-    axios.get("https://graduation-project-backend-rhwo.vercel.app/speed/get-speed")
+    axios
+      .get("https://graduation-project-backend-rhwo.vercel.app/speed/get-speed")
       .then((response) => setTrafficSpeed(response.data.trafficSpeed))
       .catch((error) => console.error("Error fetching traffic speed:", error));
 
-    axios.get("https://graduation-project-backend-rhwo.vercel.app/status/get-status")
-      .then((response) => setDrowsinessStatus(response.data.statusOfDriver.status))
+    axios
+      .get(
+        "https://graduation-project-backend-rhwo.vercel.app/status/get-status"
+      )
+      .then((response) =>
+        setDrowsinessStatus(response.data.statusOfDriver.status)
+      )
       .catch((error) => console.error("Error fetching driver status:", error));
   };
 
@@ -79,7 +110,7 @@ export default function Dashboard() {
       } catch (error) {
         console.error("Audio error:", error);
         // Show a message to the user to interact with the page
-        if (error.name === 'NotAllowedError') {
+        if (error.name === "NotAllowedError") {
           alert("Please click/tap anywhere on the page to enable alarm sounds");
         }
       }
@@ -89,7 +120,7 @@ export default function Dashboard() {
   }, [drowsinessStatus, userInteracted]);
 
   return (
-    <div 
+    <div
       className={`${styles.dashboard} ${
         isMobile ? styles.dashboardMobile : styles.dashboardDesktop
       }`}
@@ -114,19 +145,19 @@ export default function Dashboard() {
         </div>
       </div>
 
-      
       <div className={styles.mapsCameraContainer}>
         <div className={styles.mapsBox}>
           <h2 className="text-white">Live Tracker</h2>
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d27641.608998877786!2d31.1394304!3d30.002380799999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2seg!4v1739757159769!5m2!1sen!2seg"
+            key={`${gpsCoords.latitude},${gpsCoords.longitude}`} // forces iframe reload
+            src={`https://maps.google.com/maps?q=${gpsCoords.latitude},${gpsCoords.longitude}&z=15&output=embed`}
             width="100%"
             height="100%"
             style={{ border: "0" }}
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
+          />
         </div>
 
         <div className={styles.cameraBox}>
