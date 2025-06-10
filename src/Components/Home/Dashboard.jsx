@@ -140,7 +140,7 @@ export default function Dashboard() {
         <div className={styles.trafficBox}>
           <h2 className="text-white">Traffic Speed</h2>
           <p className="fw-bold">
-            {trafficSpeed !== null ? `${trafficSpeed} km/h` : "Loading..."}
+            {trafficSpeed !== null ? `${trafficSpeed} RPM` : "Loading..."}
           </p>
         </div>
       </div>
