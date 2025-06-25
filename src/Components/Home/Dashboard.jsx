@@ -17,7 +17,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchGPS = () => {
       axios
-        .get("https://graduation-project-backend-rhwo.vercel.app/gps/get-gps")
+        .get("https://graduation-project-backend-rhwo.vercel.app/gps")
         .then((res) => {
           const { latitude, longitude } = res.data;
           if (latitude && longitude) {
@@ -74,13 +74,13 @@ export default function Dashboard() {
   // Fetch data
   const fetchData = () => {
     axios
-      .get("https://graduation-project-backend-rhwo.vercel.app/speed/get-speed")
+      .get("https://graduation-project-backend-rhwo.vercel.app/speed")
       .then((response) => setTrafficSpeed(response.data.trafficSpeed))
       .catch((error) => console.error("Error fetching traffic speed:", error));
 
     axios
       .get(
-        "https://graduation-project-backend-rhwo.vercel.app/status/get-status"
+        "https://graduation-project-backend-rhwo.vercel.app/status"
       )
       .then((response) =>
         setDrowsinessStatus(response.data.statusOfDriver.status)
