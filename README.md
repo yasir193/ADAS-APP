@@ -1,10 +1,10 @@
 # Graduation Project
 
-> A React + Vite powered single‑page application as the frontend for the graduation project, deployed at [https://graduation-project-rouge-eight.vercel.app](https://graduation-project-rouge-eight.vercel.app) :contentReference[oaicite:1]{index=1}.
+> A React + Vite powered single‑page application as the frontend for the graduation project, deployed at [https://graduation-project-rouge-eight.vercel.app](https://graduation-project-rouge-eight.vercel.app)
 
 ## 🧠 About
 
-This project is the client-side portion of the Graduation Project, built with **React** and **Vite**. It features fast development workflow, hot module reloading (HMR), plus ESLint integration to enforce code quality.:contentReference[oaicite:2]{index=2}
+This project is the client-side portion of the Graduation Project, built with **React** and **Vite**. It features fast development workflow, hot module reloading (HMR), plus ESLint integration to enforce code quality.
 
 ## 📦 Technologies
 
