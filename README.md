@@ -33,7 +33,7 @@ Build for production
 npm run build
 Deploy the contents of the generated dist/ folder to a static hosting service (e.g., Vercel, Netlify).
 
-🔧 Configuration
+## 🔧 Configuration
 Configuration files include:
 
 vite.config.js — Vite build setup
@@ -45,7 +45,7 @@ package.json — scripts and dependencies
 
 Customize or extend as needed (e.g. add plugins, CSS preprocessors, TypeScript).
 
-🧩 Project Structure
+## 🧩 Project Structure
 
 
 ├── public/           # Static assets (favicon, index.html template)
@@ -58,11 +58,11 @@ Customize or extend as needed (e.g. add plugins, CSS preprocessors, TypeScript).
 ├── vite.config.js
 ├── eslint.config.js
 └── README.md
-🚀 Deployment
+## 🚀 Deployment
 This repository is set up to deploy through Vercel. Any push to the main or master branch will automatically trigger a build and publish to https://graduation-project-rouge-eight.vercel.app/
 
 
-✅ Features
+## ✅ Features
 Fast refresh with HMR
 
 ESLint-supported code quality
@@ -71,11 +71,11 @@ Ready for integration with backend APIs
 
 Modular structure for maintainability and scaling
 
-🧪 Testing
+## 🧪 Testing
 No tests currently defined.
 Consider adding unit/integration tests (e.g. using Jest, React Testing Library) for core components and page flows.
 
-🙏 Contributing
+## 🙏 Contributing
 Contributions are welcome!
 
 Fork the repository
@@ -89,10 +89,10 @@ Push branch and open a Pull Request
 After review, your changes may be merged
 
 
-📞 Contact
+## 📞 Contact
 Yasir Ahmad Sayyed – Frontend Developer
 
-Project frontend: https://graduation-project-rouge-eight.vercel.app/
+## Project frontend: https://graduation-project-rouge-eight.vercel.app/
 
 
 
