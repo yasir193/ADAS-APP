@@ -41,11 +41,13 @@ Built with Tailwind CSS, the app is fully responsive and optimized for both mobi
 
 ## 🚀 Getting Started
 
+### Access to the app
+use this 30001010124353 in the login page to get access to the app
+
 ### Prerequisites
 
 - Node.js (v16+)
 - npm (or Yarn)
-- use this 30001010124353 in the login page to get access to the app
 
 ### Install dependencies and run development server
 
